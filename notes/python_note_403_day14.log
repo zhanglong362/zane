@@ -1,0 +1,117 @@
+python 4-3 笔记
+
+回顾
+1. 三元表达式
+    x if x > y else y
+    条件成立的情况下，返回 x，条件不成立返回 y；
+2. 函数递归
+    回溯；
+    递归；
+    注意点：
+        1）必须要有一个明确的结束条件；
+        2）每进入下一次递归，问题的规模都应该减少；
+3. 匿名函数
+    没有名字，用完直接丢掉；
+    lambda x,y:x+y
+
+新笔记
+一、推导式
+1. 列表推导式
+    l = [i for i in range(5) if i > 3]
+2. 生成器推导式
+    g = (i for i in range(5) if i > 3)
+    类似于：
+        def func():
+            for i in range(5):
+                if i > 3:
+                    yiled i
+        g = func()
+一、模块
+1. 什么是模块？
+    模块，就是一系列功能的集合体。在python中，一个py文件就是一个模块，比如 module.py，其中模块名module。
+    模块分类：
+        a. 使用python编写的.py文件；
+        b. 已被编译为共享库或DLL的C或C++扩展；
+        c. 把一系列模块组织到一起的文件夹；（注：文件夹下有一个__init__.py文件，该文件夹称之为包）
+        d. 使用C编写并链接到python解释器的内置模块；
+2. 为什么要使用模块？
+    1）重用功能。从文件级别组织程序，更方便管理；
+    2）拿来主义，提升开发效率；
+3. import 模块名
+    使用方式：
+        import 模块名
+    首次导入模块：
+        1）先创建模块的全局名称空间；
+        2）执行模块所对应的文件，将产生的名字和绑定关系存入名称空间；
+        3）在执行文件中import模块名，得到该模块名指向的全局名称空间；
+    再次导入模块：
+        首次导入模块之后，会直接引用第一次导入的结果，不会重复导入；
+    特点：
+        模块中功能的使用，始终以模块自己的名称空间为准；
+    例子：
+        #spam.py
+        print('from the spam.py')
+
+        money=1000
+
+        def read1():
+            print('spam模块：',money)
+
+        def read2():
+            print('spam模块')
+            read1()
+
+        def change():
+            global money
+            money=0
+4. from 模块名 import 功能
+    首次导入模块： 
+        1）先创建模块的名称空间；
+        2）执行模块所对应的文件，将产生的名字和绑定关系存入名称空间；
+        3）在当前名称空间中，直接拿到模块中的名字，可以直接使用，不用加任何前缀；
+    特点：
+        1）from import 的导入方式，执行模块中的功能，没有名称冲突的情况下，始终以模块自己的名称空间为准；
+        2）拿到的名字可以不加前缀直接调用，使用更加方便，但容易与当前文件中的名称冲突；
+5. 模块别名
+    例子：
+        try:
+            import mysql as db
+            from mysql import conn as c
+        except:
+            import oracle as db
+            from oracle import client as c
+6. 导入多个模块
+    1）多行导入：（推荐）
+        import spam
+        import mysql
+        import oracle
+        from spam inport read
+    2）一行导入：（不推荐）
+        import spam, mysql, oracle
+        from spam inport money,read,change
+7. from ... import *
+    特点：
+        一次导入模块（限定的）所有功能
+    控制*的值：
+        在模块里指定 __all__ ['read1', 'change'] 对应的就是 * 导入的功能名称；
+
+8. python执行和导入的区分
+    1）在文件被直接执行的情况下，__name__ 等于 __main__；
+    2）在文件被导入的情况下，__name__ 等于模块名；
+9. 模块的搜索路径顺序
+    1）内存已有的模块名；
+    2）内置的模块名；
+    3）sys.path 包含的模块名；
+    sys.path 的第一个路径，永远是执行文件所在的文件夹的路径；
+
+
+
+
+
+
+
+
+
+
+
+

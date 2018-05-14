@@ -1,0 +1,192 @@
+python 4-9 笔记
+
+回顾
+1. 包
+    1）包是一个包含有 __init__.py 文件的文件夹；
+    2）包是一种特殊形式的模块。即包是用来导入的； 
+2. 包的使用
+    1）import 包名（执行包文件夹下的 __init__.py 文件）；
+    2）包.名字；名字来自于 __init__.py 文件；
+3. 导入包
+    1）产生一个包的名称空间；
+    2）执行包下的__init__.py文件，将产生的名字存放于名称空间中；
+
+新笔记
+1. shelve模块
+    f = shelve.open(r'sheve.txt')
+    f['stu1_info'] = {'name':'egon','age':18,'hobby':['piao','smoking','drinking']}
+    f['stu2_info'] = {'name':'gangdan','age':53}
+    f['school_info'] = {'website':'http://www.pypy.org','city':'beijing'}
+
+    print(f['stu1_info']['hobby'])
+    f.close()
+
+2. xml模块
+    例子：
+        <?xml version="1.0"?>
+        <data>
+            <country name="Liechtenstein">
+                <rank updated="yes">2</rank>
+                <year>2008</year>
+                <gdppc>141100</gdppc>
+                <neighbor name="Austria" direction="E"/>
+                <neighbor name="Switzerland" direction="W"/>
+            </country>
+            <country name="Singapore">
+                <rank updated="yes">5</rank>
+                <year>2011</year>
+                <gdppc>59900</gdppc>
+                <neighbor name="Malaysia" direction="N"/>
+            </country>
+            <country name="Panama">
+                <rank updated="yes">69</rank>
+                <year>2011</year>
+                <gdppc>13600</gdppc>
+                <neighbor name="Costa Rica" direction="W"/>
+                <neighbor name="Colombia" direction="E"/>
+            </country>
+        </data>
+
+    节点有3种结构：
+        1）节点的标签名：res.tag
+        2）节点的属性：res.attrib
+        3）节点的内容：res.text
+    查找文件
+        全文搜索
+            res = root.iter('year')
+            print(res)
+        在root 子节点查找，只找一个
+            res = root.find('country')
+            print(res)
+        在root 子节点查找，找到所有
+            res = root.findall('country')
+            print(res)
+    修改文件（先查找，然后写入）
+        tree.write('a.xml')
+        for year in root.iter('year'):
+            year.text = str(int(year.text) + 1)
+            year.attrib = {'over': yes}
+
+    增加和删除内容
+        for country in root.iter('country'):
+            year = country.find('year')
+            if int(year.text) > 2020:
+                ele = ET.element('egon')
+                ele.attrib = {'nb': 'yes'}
+                ele.text = '非常棒'
+                country.append(ele)
+                country.remove('gdppc')
+
+3. 正则表达式
+    1）\w 匹配字母数字及下划线 \W 取反
+        print(re.findall('\w','hello egon 123'))
+        print(re.findall('\W','hello egon 123'))
+
+    2）\s 匹配任意空白字符，等价于[\r\n\t\f] \S 取反
+        print(re.findall('\s','hello  egon  123'))
+        print(re.findall('\S','hello  egon  123'))
+
+    3）\d 匹配任意数字，等价于[0-9] \D 取反
+        print(re.findall('\d','hello egon 123'))
+        print(re.findall('\D','hello egon 123'))
+
+    4）\A 只匹配起始位置，不匹配结束查找
+        print(re.findall('\Aegon','hello egon 123'))
+        print(re.findall('^egon','hello egon 123'))
+
+    5）$ == \Z 只匹配行结束位置，换行结束
+        print(re.findall('egon\Z','hello egon 123'))
+        print(re.findall('egon$','hello egon 123'))
+
+    6）\n 匹配一个换行符
+        print(re.findall('\n','hello egon 123'))
+
+    7）\t 匹配一个制表符
+        print(re.findall('\t','hello egon 123'))
+
+    8）. 匹配除换行符外的任意一个字符；使用re.DOTALL参数，匹配所有任意一个字符；
+        print(re.findall('e.on','hello egon 123'))
+        print(re.findall('e.on','hello egon 123', re.DOTALL))
+
+    9）? 匹配0个或1个由前面的正则表达式定义的片段，非贪婪方式
+        print(re.findall('eon?','hello egon 123'))
+
+    10）* 匹配前面那个字符出现0个或无穷个  ===> 非贪婪模式
+        print(re.findall('eon*','hello egonnn 123'))
+
+    11）+ 匹配前面那个字符出现1个或无穷个
+        print(re.findall('eon+','hello egonnn 123'))
+
+    12）{m, n} 匹配前面一个字符，出现m次到n次
+        a. 实现?号匹配
+            print(re.findall('e{0, 1}on','hello egonnn 123'))
+        b. 实现*号匹配
+            print(re.findall('e{0,}on','hello egonnn 123'))
+        c. 实现+号匹配
+            print(re.findall('egon{1, }','hello eegonnn 123'))
+
+    13）.* 匹配任意长度，且任意的字符  ===> 贪婪模式
+        print(re.findall('e.*on','hello egonnn 123'))
+
+    14）.*? 匹配任意长度，且任意的字符；*后面? 代表非贪婪匹配
+        print(re.findall('e.*?on', 'hello egonnn 123'))
+
+    15）() 分组作用，表达式正常匹配，但只返回括号内的字符串
+        print(re.findall('(alex)_sb', 'alex_sb asdfdhjahfalex_sb'))
+
+    16）[] 用来表示一组字符,单独列出：[amk] 匹配 'a'，'m'或'k'；中括号里使用 ^ 代表取反；
+        print(re.findall('[egon]','hello egon 123'))
+        print(re.findall('[^egon]','hello egon 123'))
+
+    17）| 或者 (?:) 小括号内 ?: 代表匹配成功的所以内容，而不仅仅是括号内的内容
+        print(re.findall('egon(?:s|es)','hello egons 123 egones'))
+
+4. re模块其他方法
+    1）查找所以符合条件的字符串
+        print(re.findall('egon(?:s|es)','hello egons 123 egones'))
+
+    2）查找所以包含的字符串，返回一个对象；使用 group方法获取一个值
+        print(re.search('egon(?:s|es)','hello egons 123 egones').group())
+
+    3）match 就是 ^必须开头就匹配的search，返回一个对象；使用 group方法获取一个值
+        print(re.match('egon(?:s|es)','egons 123 egones').group())
+
+    4）split 多个分隔符拆分字符串
+        print(re.split('[ :\\\/]', r'got :a.txt\3333/rwx'))
+
+    5）sub 替换，字符串位置互换
+        print(re.sub('^egon', 'Egon', 'egon is beautful egon'))
+        print(re.sub('(.*?)(egon)(.*?)(egon)(.*)', r'\1\2\3Egon\5', '123 egon is beautful egon 123'))
+        print(re.sub('(lqz)(.*?)(SB)', r'\3\2\1', 'lqz is SB'))
+        print(re.sub('([a-zA-Z]+)([^a-zA-Z]+)([a-zA-Z]+)([^a-zA-Z]+)([a-zA-Z]+)', r'\5\2\3\4\1', 'lqz is SB'))
+
+    6）compile
+        patten = re.compile('egon')
+        print(re.findall(patten, 'hello egons 123 egones'))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

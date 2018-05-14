@@ -1,0 +1,4 @@
+[2018-04-17 20:46:32,067][MainThread:140735624860480][task_id:user][user.py:20][INFO][用户egon注册成功！]
+[2018-04-17 20:46:40,169][MainThread:140735624860480][task_id:user][user.py:20][INFO][用户alex注册成功！]
+[2018-04-17 21:19:50,489][MainThread:140735624860480][task_id:bank][bank.py:12][WARNING][用户egon账户余额不足，转账失败！]
+[2018-04-17 21:19:58,403][MainThread:140735624860480][task_id:bank][bank.py:12][WARNING][用户egon账户余额不足，转账失败！]

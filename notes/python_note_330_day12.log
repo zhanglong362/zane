@@ -1,0 +1,160 @@
+python 3-30 笔记
+
+回顾：
+1. 为什么要有装饰器？
+    为了给软件在不改变源代码，及其调用方式的前提下，增加新功能。
+    装饰器原则：软件一旦上线，就应该遵循开放封闭原则，对扩展开放，对修改源代码及其调用方式封闭。
+2. 什么是装饰器》
+    器，工具。装饰，增加功能。
+    装饰器，是不改变源代码，及其调用方式的前提下，增加新功能。
+3. 无参装饰器
+    1）定义：
+        def outter(func):
+            def wrapper(*args, **kwargs):
+                res = func(*args, **kwargs)
+                return res
+            return wrapper
+    2）使用（在被装饰的函数上面 @装饰器名字）：
+        @outter
+        def foo():
+            pass
+4. 有参装饰器
+    1）定义：
+        def ouuter(x, y, z):
+            def handler(func):
+                def wrapper(*args, **kwargs):
+                    res = func(*args, **kwargs)
+                    return res
+                return wrapper
+            return handler
+    2）使用（在被装饰的函数上面 @装饰器名字）：
+        @outter(x, y, z)
+        def foo():
+            pass
+
+新笔记
+1. 什么是迭代？
+    迭代是一个重复的过程，并且每次重复都是基于上一次的结果而来。
+2. 可迭代的对象
+    含义：内置有 __iter__方法的对象，都是可迭代对象。
+    获取方式：无需获取，python解释器本身内置；
+    特点：
+        1）内置有 __iter__ 方法，执行该方法会拿到迭代器对象；
+        2）可迭代的对象，不一定是迭代器对象；
+    例子：
+        a. 数字和函数是不可迭代的：
+            num = 1
+            def func():
+                pass
+        b. 下列数据类型是可迭代的：
+            list1 = [1,2,3]
+            tup1 = (1,2,3)
+            dic = {'x':1,'y':2,'z':3}
+            set1 = {1,2,3}
+            f = open(r'a.txt')
+    
+3. 迭代器对象
+    含义：执行可迭代对象的__iter__方法，拿到的返回值就是可迭代对象
+    特点：
+        1）内置有 __iter__ 方法，执行该方法会拿到迭代器对象本身；
+        2）内置有 __next__ 方法，执行该方法会拿到迭代器对象的一个值；
+        3）迭代器对象，一定是可迭代的对象
+    
+4. 迭代器
+    含义：迭代取值的工具。可迭代的对象，执行str1 = 'hello'
+        list1 = [1,2,3]
+        tup1 = (1,2,3)
+        dic = {'x':1,'y':2,'z':3}
+        set1 = {1,2,3}
+        f = open(r'a.txt')
+    如何取值：
+        dic = {'x': 1, 'y': 2, 'z': 3}
+        iter_dic = dic.__iter__()
+
+        print(iter_dic.__next__())
+        print(iter_dic.__next__())
+        print(iter_dic.__next__())
+        print(iter_dic.__next__())          # 报错 StopIteration 结束迭代
+    优点：
+        a. 提供了一种可不依赖于索引取值的方式；
+        b. 迭代器更加节省内存；
+    缺点：
+        a. 取值麻烦，只能一个一个取值，只能往后取，并且是一次性的；
+5. 生成器
+    含义：调用带有 yield 关键的函数，而生成的对象就是生成器。
+    特点：
+        1）生成器本质就是迭代器；
+        2）函数内包含有 yield 关键字，再调用函数就不会执行函数代码，而是返回一个生成器对象；
+    总结：
+        1）提供了一种自定义迭代器的方式，可以再函数内用 yield 关键字，调用函数的返回值就是一个生成器，生成器就是迭代器；
+        2）yield 可以像 return 一样返回值，区别是 return 只能返回一次值，而yield 可以返多次值；
+        3）yield 可以保存函数的状态；
+    例子：
+        def chicken():
+            print('=====> first')
+            yield 1
+            print('=====> second')
+            yield 2
+            print('=====> third')
+            yield 3
+
+        obj = chicken()
+
+        print('obj.__iter__() is obj')
+        res = obj.__next__()
+        print(res)
+        res1 = obj.__next__()
+        print(res1)
+        res2 = obj.__next__()
+        print(res2)
+
+        for item in obj:
+            print(item)
+
+        def my_range():
+            print('start...')
+            i = 0
+            while True:
+                yield i
+                i += 1
+
+        obj = my_range()
+
+        print(obj.__next__())
+        print(obj.__next__())
+        print(obj.__next__())
+
+6. 协程函数
+    例子：
+        def eat(name):
+        print('%s ready to eat' % name)
+        food_list = []
+        while True:
+            food = yield food_list
+            print('%s start to eat %s' % (name, food))
+            food_list.append(food)
+
+        dog1 = eat('John')
+    1）函数必须初始化一次，就是先调用一次 next 方法，让函数停留在 yield 的位置；
+        print(dog1.__next__())
+
+    2）使用 send 方法给 yield 传值，其次和 next 方法一致；
+        print(dog1.send('面包'))
+        print(dog1.send('骨头'))
+
+7. 面向过程编程
+    基于过程的编程思想，核心是‘过程’，过程即解决问题的步骤，都先干什么，在干什么。
+    基于过程编写程序，就好比在设计一条流水线，是一种机械式的思维方式。
+    优点：
+        复杂的问题流程化，进而简单化；
+    缺点：
+        修改一个阶段，其它阶段都有可能需要作出修改，扩展性极差；
+    应用场景：
+        用于扩展性要求低的场景；
+    注册功能的例子：
+        1）第一步：先拿到用户合法的输入信息：用户名、密码、余额；
+        2）第二部：写入用户信息到文件；
+
+
+
+

@@ -1,0 +1,219 @@
+python 3-21 笔记
+
+回顾：
+一、 字符串
+    x = 'abcdef字'
+    y = 'get|a.txt|333'
+    l = ['get', 'a.txt', '333']
+1. 索引取值
+    x[0]
+2. 切片
+    x[0:3:2]
+3. 统计长度
+    len(x)
+4. in 和 not in
+    'bc' in x
+5. 去除空格
+    x.strip()
+5. 切分
+    y.split('|')
+6. 拼接           # 只能是字符串列表
+    '|'.join(l)
+7. 循环打印所有字符串
+    1）不依赖索引
+        for i in x:
+        print(i)
+    2）依赖索引
+        i = 0
+        while i < len(x):
+            print(x[i])
+            i += 1
+
+        for i in range(len(x)):
+            print(x[i])
+    # 新补充知识
+    enumerate()  快捷获取字符串、列表、字典的索引和值（字典取的值是key）
+    
+    goods = 'apple'
+    goods = ['mac', 'apple', 'iphone', 'tesla']
+    goods = {'mac': 10000, 'apple': 200, 'iphone': 8000, 'tesla': 20000}
+
+    for number, good in enumerate(goods):
+        print(number, good)
+
+    #
+    l = list(enumerate('hello'))
+
+8. 格式化字符串
+    1）% 方式
+        'my name is %s age is %s' % ('egon', 18)
+    2）format 方式
+        'my name is {} age is {}'.format('egon', 18)
+        'my name is {0} age is {1}'.format('egon', 18)
+        'my name is {name} age is {age}'.format(name='egon', age=18)
+
+二、 列表
+1. 列表基础
+    s = 'hello'
+    l = list()
+    for item in l:
+        print(item)
+    l.append(s)
+    l.insert(-1, s)
+    print(l)
+    # enumerate() 制作
+    l = list(enumerate('hello'))
+    print(l)
+    l.remove('hello')
+    l.pop()
+
+新笔记：
+一、 扩展：
+    # 新补充知识
+    enumerate()  快捷获取字符串、列表、字典的索引和值（字典取的值是key）
+    
+    goods = 'apple'
+    goods = ['mac', 'apple', 'iphone', 'tesla']
+    goods = {'mac': 10000, 'apple': 200, 'iphone': 8000, 'tesla': 20000}
+
+    for number, good in enumerate(goods):
+        print(number, good)
+
+二、数据类型:
+1. tuple 元组类型
+    用途：存多个值，但是只有读的需求，没有改的需求
+    强调：在元素个数相同的情况下，使用元组更加节省内存空间
+    定义方式：t = (1, 2, 3, 4)     # t = tuple((1, 2, 3, 4))
+    总结元组：
+        可以存多个值；
+        有序；
+        不可变数据类型；
+        可 hash；
+    常用操作和内置方法：
+        a. 转换成元组
+            s = 'hello'
+            t = tuple(s)
+        b. 统计指定元素在元组内的个数 count()
+            t = ('a', 'b', 'c')
+            print(t.count('c'))
+        c. 获取指定元素索引 index()
+            t = ('a', 'b', 'c')
+            print(t.index('a'))
+
+2. dict 字典类型：
+    扩展：
+        python3 的优化机制，让字典部分情况下看起来是有序的；
+        python2 没有这个优化机制；
+    用途：以键值对映射的形式存多个值，优点是存取都快，每一个值都有对应的键
+    定义方式：
+        在 {} 内以逗号分隔多个元素，格式为 key:value
+        d = {'x': 1, 'y': 2}     # d = dict({'x': 1, 'y': 2})
+    总结：
+        可以存多个值；
+        无序；
+        可变数据类型；
+        元素不可 hash；
+    常用操作和内置方法：
+        a. 按索引取值，可取可存
+            dic = {'name': 'egon'}
+        b. 增加和修改
+            dic['age'] = 10
+            print(dic)
+            dic['name'] = 'EGON'
+            print(dic)
+            dic['name'] = dic['name'].upper()
+            print(dic)
+        c. 长度 len()
+            dic = {'name': 'egon', 'age': 18}
+            print(len(dic))
+        d. 删除
+            dic = {'name': 'egon', 'age': 18}
+            dic.pop('name')
+            d.pop('name', None)          # 如果不存在 key，则返回 None
+        e. 获取字典内的所有元素
+            获取所有键  dict.keys()       # 默认的是获取键
+            dic = {'name': 'egon', 'age': 18}
+            dict_keys = dic.keys()
+
+            获取所有值 dict.values()
+            dict_values = dic.values()
+
+            获取所有键值对  dict.items()
+            dict_items = dic.items()
+        f. get()
+            d = {'name': 'egon', 'age': 18}
+            print(dic.get('name'))          # 存在返回值
+            print(dic.get('lala'))          # 不存在返回 None
+        g. popitem()
+            d = {'name': 'egon', 'age': 18}
+            print(dic.popitem('name'))
+        h. setdefault()
+            d = {'name': 'egon', 'age': 18}
+            d.setdefault({'sex', 'male'})   # 如果有对应的key，返回key的值；如果没有，则新增键值对，返回值；
+        i. update()
+            d = {'name': 'egon', 'age': 18}
+            d.update({'sex': male})         # 不存在创建，存在更新
+        j. fromkeys()
+            l = ['name', 'age', 'sex']
+            d = {}.fromkeys(l)              # d = {'name': None, 'age': None, 'sex': None}
+3. set 集合类型
+    用途：
+        1. 关系运算；
+        2. 去重；
+    特点：
+        1. 集合内没有重复的元素；
+            s = {1, 2, 3, 4, 4, 4, 'a'}
+            print(s)                        # 结果 {1, 2, 3, 4, 'a'}
+        2. 集合元素必须是不可变数据类型；
+            s = {[1, 2, 3], 'aa'}
+            print(s)
+    定义方式：
+        在 {} 内以逗号分隔开一个个元素
+        s = {1, 2, 3, 4, 'a'}     # s = set({1, 2, 3, 4, 'a'})
+    总结：
+        可以存多个值；
+        无序；
+        可变数据类型；
+        不可 hash；
+    常用操作和内置方法：
+        s1 = {'alex', 'egon', 'oldboy'}
+        s2 = {'wxx', 'alex', 'egon'}
+        a. 取交集
+            print(s1 & s2)                  # 结果 {alex', 'egon'}
+        b. 取并集
+            print(s1 | s2)                  # 结果 {'alex', 'egon', 'oldboy', 'wxx'}
+        c. 取差集
+            print(s1 - s2)                  # 结果 {'oldboy'}
+            print(s2 - s1)                  # 结果 {'wxx'}
+        d. 交叉补集
+            print(s1 ^ s2)                  # 结果 {'oldboy', 'wxx'}
+        e. 父集
+            set1 = {1, 2, 3, 4, 5}
+            set2 = {1, 2, 3}
+            print(set1 > set2)              # 结果 True
+
+            issubset() 可以判断是否是子集
+        f. 添加元素 add()
+            s1.add('egon')
+            s2.update(s2)
+        g. 删除元素 discard()
+            s1.discard('nnn')               # 元素不存在时，不报错，返回None
+            s1.remove('nnn')                # 元素不存在时，直接报错
+            s1.pop()                        # 随机取走1个元素
+        h. 循环取值
+            for i in s1:
+                print(i)
+        i. 统计长度
+            s = len(s1)
+        j. 成员运算 in 和 not in
+            'egon' in s1
+        k. 判断是否有交集 
+            s1.isdisjoint(s2)
+
+
+
+
+
+
+
+

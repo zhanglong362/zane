@@ -1,0 +1,19 @@
+[2018-04-13 19:36:57,197][MainThread:1328][task_id:ATM][src.py:104][DEBUG][wxx向黄静转账1000成功!]
+[2018-04-13 20:04:21,058][MainThread:12704][task_id:ATM][src.py:104][DEBUG][dream向黄静转账10000成功!]
+[2018-04-13 20:06:48,078][MainThread:14316][task_id:ATM][src.py:126][DEBUG][dream还款100,当前信用可用额度为:15100]
+[2018-04-13 20:08:31,158][MainThread:1080][task_id:ATM][src.py:104][DEBUG][dream向黄静转账1000成功!
+]
+[2018-04-13 20:11:55,752][MainThread:12708][task_id:ATM][src.py:107][DEBUG][dream向黄静转账100成功!
+]
+[2018-04-13 20:12:21,452][MainThread:13596][task_id:ATM][src.py:107][DEBUG][dream向dream转账1000成功!
+]
+[2018-04-13 20:14:31,365][MainThread:13084][task_id:ATM][src.py:110][DEBUG][dream向黄静转账1000成功!]
+[2018-04-13 20:14:55,316][MainThread:13084][task_id:ATM][src.py:110][DEBUG][dream向黄静转账100成功!]
+[2018-04-13 20:15:05,302][MainThread:13084][task_id:ATM][src.py:133][DEBUG][dream还款1000,当前信用可用额度为:16000]
+[2018-04-13 20:15:15,961][MainThread:13084][task_id:ATM][src.py:133][DEBUG][dream还款1000,当前信用可用额度为:17000]
+[2018-04-13 20:15:19,200][MainThread:13084][task_id:ATM][src.py:133][DEBUG][dream还款1000,当前信用可用额度为:18000]
+[2018-04-13 20:17:43,256][MainThread:6428][task_id:ATM][src.py:157][DEBUG][dream提现：1000,当前信用可用额度为:17000 手续费:50.0]
+[2018-04-17 14:27:32,268][MainThread:140735624860480][task_id:ATM][src.py:110][DEBUG][egon向alex转账1000成功!]
+[2018-04-17 14:28:26,195][MainThread:140735624860480][task_id:ATM][src.py:133][DEBUG][egon还款0,当前信用可用额度为:15000]
+[2018-04-17 14:28:45,079][MainThread:140735624860480][task_id:ATM][src.py:157][DEBUG][egon提现：950.0,当前信用可用额度为:14000 手续费:50.0]
+[2018-04-17 14:30:44,288][MainThread:140735624860480][task_id:ATM][src.py:133][DEBUG][egon还款1000,当前信用可用额度为:15000]

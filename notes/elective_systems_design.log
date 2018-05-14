@@ -1,0 +1,86 @@
+选课系统设计
+
+一、需求分析
+1. 管理员
+    创建学校对象
+    创建班级对象
+    创建老师对象
+    创建课程对象
+2. 学生
+    注册
+    登陆
+    选课
+    交费
+3. 老师
+    查看班级学员列表
+    修改班级学员成绩
+
+二、设计类
+
+class School:
+    school_name = 'Oldboy'
+
+    def __init__(self, district, classes):
+        self.district = district
+        self.classes = classes
+
+obj_school_beijing = School('北京校区', ['python', 'linux'])
+obj_school_shanghai = School('上海校区', ['go'])
+
+class Classes:
+    def __init__(self, name):
+        self.name = name
+        self.students = {}
+
+obj_classes_python = Classes('python')
+obj_classes_linux = Classes('linux')
+obj_classes_go = Classes('go')
+
+class Teacher:
+    def __init__(self, name, password, classes):
+        self.name = name
+        self.password = password
+        self.classes = classes
+
+obj_teacher_egon = Teacher('egon', '123', obj_classes_python)
+obj_teacher_alex = Teacher('alex', '123', obj_classes_linux)
+obj_teacher_lqz = Teacher('lqz', '123', obj_classes_go)
+
+class Course:
+    def __init__(self, name, price, cycle, school, teacher):
+        self.name = name
+        self.price = price
+        self.cycle = cycle
+        self.school = school
+        self.teacher = teacher
+
+obj_course_python = Course('python', '19800', '5months', obj_school_beijing, obj_teacher_egon)
+obj_course_linux = Course('linux', '15000', '5months', obj_school_beijing, obj_teacher_alex)
+obj_course_go = Course('linux', '15000', '5months', obj_school_beijing, obj_teacher_lqz)
+
+class Student:
+    def __init__(self, name, password, course):
+       self.name = name
+       self.password = password
+       self.course = course
+
+obj_student_zane = Student('Zane', '123', [obj_course_python, obj_course_linux])
+obj_student_john = Student('John', '123', [obj_course_go])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

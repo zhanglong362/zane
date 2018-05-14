@@ -1,0 +1,35 @@
+python 5-2 笔记
+
+回顾
+1. 协程
+    单线程下实现并发
+
+    并发：看起来是同时运行
+    并发实质的本质 = 切换 + 保存状态
+
+    切换的2种场景：
+        1）遇到IO阻塞会切换；
+        2）占用CPU时间过长或有一个优先级更高的任务抢走了CPU;
+
+2. 协程实现
+    方式一：
+        yiled 生成器，greenlet
+        特点：无法检测单线程下的IO行为，无法实现遇到IO自动切换到其他任务，
+        执行的操作
+
+    方式二：
+        from gevent import monkey; monkey.patch_all()
+        import gevent
+        import time
+
+        time.sleep(3)
+
+新笔记
+1. IO模型（解决网络IO）
+
+
+
+
+
+
+

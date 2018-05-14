@@ -1,0 +1,5 @@
+[2018-04-17 14:31:53,648][MainThread:140735624860480][task_id:User][user.py:9][INFO][egon注册成功]
+[2018-04-17 14:32:00,685][MainThread:140735624860480][task_id:User][user.py:9][INFO][alex注册成功]
+[2018-04-17 14:36:10,719][MainThread:140735624860480][task_id:Benk][benk.py:15][INFO][egon给alex转账，1000 人民币]
+[2018-04-17 14:37:14,568][MainThread:140735624860480][task_id:Benk][benk.py:21][INFO][egon提现了1000 人民币]
+[2018-04-17 14:37:31,401][MainThread:140735624860480][task_id:Benk][benk.py:27][INFO][egon还款1000 人民币]

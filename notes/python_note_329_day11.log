@@ -1,0 +1,238 @@
+python 3-29 笔记
+
+回顾：
+一、函数对象
+1. 函数可以被引用；
+2. 函数可以当做参数传给另一个函数；
+3. 函数可以当做返回值；
+4. 函数可以当做容器类的元素；
+二、函数嵌套
+1. 函数嵌套调用
+    def foo():
+        bar()
+2. 函数嵌套定义
+    def foo():
+        def bar():
+            pass
+三、名称空间和作用域
+1. 名称空间
+    存放名字与值绑定关系的地方，就是名称空间；
+    1）内置名称空间：
+        a. 存放python解释器自带的名字；
+        b. python解释器启动生效，结束失效；
+    2）全局名称空间：
+        a. 存放文件级别的名字；
+        b. 程序启动生效，结束或运行时删除失效；
+    3）局部名称空间：
+        a. 存放函数内定义的名字；
+        b. 函数运行时临时生效，结束失效；
+    4）加载顺序：
+        内置名称空间 --> 全局名称空间 --> 局部名称空间
+    5) 查找顺序：
+        局部名称空间 --> 全局名称空间 --> 内置名称空间
+2. 作用域
+    作用域关系在定义阶段就固定了，与函数调用位置无关；
+    1) 全局范围（全局作用域）:
+        a. 内置名称空间，全局名称空间；
+        b. 全局有效，全局存活；（程序生命周期内）
+    2）局部范围（局部作用域）：
+        a. 局部内存空间；
+        b. 局部有效，局部存活；（函数生命周期内）
+四、闭包函数
+1. 函数定义
+    定义在函数内部的函数，并且该函数包含对外部函数作用域（非全局）名字的引用，成为闭包函数。
+    def outter():
+        x = 1
+        def inner():
+            print(x)
+        return inner
+    func = outter()           # f = inner
+    func()
+2. 为函数体传参的两种方式
+    1）直接为该函数定义一个参数，以参数方式传入
+        def foo(name):
+            print(name)
+        foo(name)
+    2）定义一个闭包函数，在外层函数内定义该参数
+        a. 参数固定版：
+            def ouuter():
+                name = 'egon'
+                def inner():
+                    print(name)
+                return inner
+            f = outter()
+            f()
+        b. 参数自定义版：
+            def ouuter(name):
+                def inner():
+                    print(name)
+                return inner
+            f = outter('egon')
+            f()
+五、装饰器
+    def outter(func):
+        def wrapper(*args, **kwargs):
+            res = func(*args, **kwargs)
+            return res
+        return wrapper
+1. 开放封闭原则
+    原则：软件一旦上线后，就应该遵循开放封闭原则，即对修改源代码是封闭的，对功能的扩展是开放的；
+    解决方案：
+        装饰器，能够在不修改一个功能源代码以及调用方式的前提下，为其加上新功能。
+    总结：
+        原则：
+            a. 不修改源代码；
+            b. 不修改调用方式；
+        目的：
+            在遵循以上原则的前提下，扩展新功能；
+2. 什么是装饰器？
+    含义：（ 器，指的是工具。装饰，指的是为被装饰对象加上新功能。）
+        装饰器，即在不修改被装饰对象源代码与调用方式的前提下，为被装饰器对象添加新功能。
+
+    特点：
+        装饰器与被装饰的对象均可以是任意可调用的对象。
+        装饰器 --> 函数
+        被装饰的对象 --> 函数
+3. 装饰器的使用
+    import time
+
+    user_info = {
+        'egon': {
+            'password': '123'
+        }
+    }
+
+    login_list = []
+    name = input('name >>: ').strip()
+    password = input('password >>: ').strip()
+
+    def auth(func):
+        def wrapper(*args, **kwargs):
+            if len(login_list) > 0:
+                print('用户%s认证通过！' % name)
+                res = func(*args, **kwargs)
+                return res
+            if name not in user_info:
+                print('用户名不存在！')
+                return
+            if password != user_info[name]['password']:
+                print('密码错误！')
+                return
+            print('用户%s认证通过！' % name)
+            login_list.append(name)
+            res = func(*args, **kwargs)
+            return res
+        return wrapper
+
+    def timmer(func):
+        def wrapper(*args, **kwargs):
+            start_time = time.time()
+            res = func(*args, **kwargs)
+            stop_time = time.time()
+            print('Run time is %s' % (stop_time - start_time))
+            return res
+        return wrapper
+
+    @auth
+    @timmer
+    def index():
+        time.sleep(1)
+        print('Welcome to Index Page!')
+        return 123
+    @auth
+    @timmer
+    def home(name):
+        time.sleep(2)
+        print('Welcome %s to Home Page!' % name)
+        return 'home'
+
+    index()
+    print(home('alex'))
+
+4. 装饰器语法
+    被装饰函数的正上方，单独一行
+    @deco1
+    @deco2
+    @deco3
+    def foo():
+        pass
+
+    foo=deco1(deco2(deco3(foo)))
+
+5. 装饰器补充：wraps 有参装饰器
+    import time
+
+    user_info = {
+        'egon': {
+            'password': '123'
+        }
+    }
+
+    login_list = []
+    # name = input('name >>: ').strip()
+    # password = input('password >>: ').strip()
+    name = 'egon'
+    password = '123'
+
+    def auth(name, password):
+        def wrapper(func):
+            def wrapper(*args, **kwargs):
+                if len(login_list) > 0:
+                    print('用户%s认证通过！' % name)
+                    res = func(*args, **kwargs)
+                    return res
+                if name not in user_info:
+                    print('用户名不存在！')
+                    return
+                if password != user_info[name]['password']:
+                    print('密码错误！')
+                    return
+                print('用户%s认证通过！' % name)
+                login_list.append(name)
+                res = func(*args, **kwargs)
+                return res
+            return wrapper
+        return wrapper
+
+    def timmer(func):
+        def wrapper(*args, **kwargs):
+            start_time = time.time()
+            res = func(*args, **kwargs)
+            stop_time = time.time()
+            print('Run time is %s' % (stop_time - start_time))
+            return res
+        return wrapper
+
+    @auth(name, password)
+    @timmer
+    def index():
+        time.sleep(1)
+        print('Welcome to Index Page!')
+        return 123
+    @auth(name, password)
+    @timmer
+    def home(name):
+        time.sleep(2)
+        print('Welcome %s to Home Page!' % name)
+        return 'home'
+
+    index()
+    home('egon')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

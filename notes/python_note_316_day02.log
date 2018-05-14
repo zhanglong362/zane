@@ -1,0 +1,450 @@
+python 3-16 笔记
+
+完整的计算机系统：
+    应用程序
+    操作系统
+    计算机硬件
+
+1 操作系统
+  1）什么是操作系统：
+    是一个协调、管理、控制计算机硬件与软件的控制程序
+
+  2）操作系统分成两部分：
+    接口程序：将硬件的功能封装成简单的接口，用来给应用软件或者给用户使用
+    内核：具体控制硬件，对下
+
+2 内核态与用户态（了解）：
+    CPU的两种工作状态
+        用户态：CPU执行用户程序/应用程序所处的状态，处于用户态不能控制硬件
+        内核态：执行操作系统内核所处的状态，处于内核态能够控制硬件
+
+3 应用程序的启动：（重要！！！）
+    前提：先启动操作系统
+    1  向操作系统提交程序启动文件的路径
+    2  操作系统根据启动文件路径把程序的数据从硬盘读入内存
+    3  操作系统调用CPU来执行内存中刚刚读入的程序数据
+
+4 编程语言分类：
+    1）机器语言：用二进制指令编程，本质是直接操作硬件
+        优点：执行效率高
+        缺点：
+            开发效率低
+            学习难度高
+
+    2）汇编语言：用英文标签代替二进制指令，本质也是直接操作硬件
+        优点：执行效率高
+         缺点：
+            开发效率低
+            学习难度高
+    3）高级语言：用人的字符去编写程序，人类的字符计算机无法理解，必须经过翻译，翻译成机器语言计算机才能执行
+        a. 编译型：C
+            类似与谷歌翻译 —> gcc
+            特点：编译一次，拿到结果可以重复执行，无需重新编译
+    
+            翻译：程序 —> gcc —> 机器语言
+            执行：机器语言 —> CPU
+
+            优点：
+                执行效率高
+            缺点：
+                调试程序麻烦
+                 跨平台性差
+
+        b. 解释型：Python
+            类似于同声传译 —> 解释器
+            特点：解释一行，执行一行，即边翻译边执行
+
+            程序 —> 解释器 —> 机器语言 —> CPU
+            程序 -> CPython解释器 -> C语言的功能 -> 机器语言 -> CPU 
+            CPython解释器 -> C语言的功能 -> 机器语言 -> CPU
+
+            优点：
+                开发效率高
+                跨平台性高
+                调试程序方便
+            缺点：
+                执行效率低
+
+    学习难度：从高到低  机器语言 --> 汇编语言 --> 高级语言
+    执行效率：从高到低  机器语言 --> 汇编语言 --> 高级语言
+    开发效率：从低到高  机器语言 --> 汇编语言 --> 高级语言
+
+5 python解释器安装，多版本共存
+    我的电脑 —> 属性 —> 高级系统属性 —> 环境变量 —> 修改系统 PATH
+
+    win10：直接添加
+    win7：C:\Users\oldboy2;C\Users\oldboy3;D:\python36
+
+    mac：
+        /etc/profile
+            PATH=python的安装路径:$PATH
+            export PATH
+        source /etc/profile
+
+6 第一个python程序，两种运行程序的方式
+    交互式：调试程序
+    python 程序的路径：python test.txt （强调，后缀名没有影响，但写成.py结尾是约定俗成）
+
+    重点：
+        1  先启动python解释器
+        2  将 D:\test.txt的代码读入内存
+        3  解释执行
+
+7 变量：
+    什么是变量？
+        变：变化
+        量：表示的是状态
+        变量是一种可以反映出状态变化的一种机制
+    为什么要有变量？
+        程序的执行本质就是一系列的状态变化
+
+    如何定义变量？
+        变量名=值
+        变量名是对值的引用
+        level=0
+        level=1
+
+        age=18
+        age=19
+
+        is_live=True
+        is_live=False
+
+        name='egon'
+    python自动的垃圾回收机制
+        垃圾：值身上的引用计数为0
+        增加引用计数：
+            x=1
+            y=x   (y=1)
+        减少引用计数：
+            x='xxxx'
+            del y         # 删除 y与1的绑定关系
+
+    变量的命名规范？
+        1  变量名只能是字母、数字或下划线的任意组合
+        2  变量名的第一个字符不能是数字
+        3  关键字不能声明为变量名
+
+    定义方式？
+        驼峰体:
+            AgeOfOldboy=58
+        下划线:
+            age_of_oldboy=58
+
+
+    变量的3个特征（重点）
+         id
+         type
+         value
+        示范：
+            >>> name='egon'
+            >>> id(name)
+            4344262944
+            >>> type(name)
+            <type 'str'>
+            >>> name
+            'egon'
+
+        #is:身份运算，比较的是id
+        #==:比较的是值
+        s1='name:alex,age:73'
+        s2='name:alex,age:73'
+        示范：
+            >>> s1='name:alex,age:73'
+            >>> s2='name:alex,age:73'
+            >>> 
+            >>> id(s1)
+            4344256640
+            >>> id(s2)
+            4344256696
+            >>> 
+            >>> s1 is s2
+            False
+            >>> s1 == s2
+8 常量：不变的量
+    AGE_OF_OLDBOY=58
+
+
+9 用户与程序交互
+    input()
+
+    1）注释
+        # 注释单行
+        '''''' 三引号注释多行
+    2）文件头
+        #!/usr/bin/env python
+        # -*- coding: utf-8 -*- 
+
+10 基本数据类型
+
+    1）数字类型：
+        a. 整型：int
+           等级、年龄、身份证号、学号、id号
+
+        level=10    # level=int(10)
+        level=int(10)
+        #print(id(level), type(level), level)
+        age=18
+        empid=123
+
+        b. 浮点数：float
+           身高、体重、薪资
+
+        salary=3.1
+        height=1.83
+
+    2）字符串: str 包含在引号（单引号、双引号、三引号）内的一串字符
+       用来表示：名字、家庭住址、描述性的数据
+
+        s1='egon'
+        s2="egon"
+        s3='''
+        egon
+        '''
+        s4="""
+        egon
+        """
+        #print(s1, s2, s3, s4)
+
+        msg='hello "egon"'
+        msg="hello 'egon'"
+        #print(msg)
+
+        # 字符串拼接：+ *
+        s1='hello'
+        s2='world'
+        #print(s1+s2)
+        #print(s1*10)
+
+    3) 列表：定义在[]中括号内用逗号分隔多个值，值可以是任意类型
+       用来存放多个值：多个爱好、多个人名
+
+        stu_names=['asb', 'egon', 'wsb']  # stu_names=list(['asb', 'egon', 'wsb'])
+        #print(id(stu_names), type(stu_names), stu_names)
+        #print(stu_names[0], stu_names[1])
+
+        user_info=['egon',18,['read', 'music', 'dancing', 'play']]
+        #print(user_info[1], user_info[2][1])
+
+    4) 字典：定义在{}花括号内用逗号隔开，每一个元素都是key,value的形式，其中value可以是任意类型
+
+        user_info={'name': 'egon', 'age': 18, 'hobby': ['read', 'music', 'dancing', 'play']}
+        #print(id(user_info), type(user_info), user_info)
+
+        #print(user_info['age'])
+        #print(user_info['hobby'][3])
+
+        info={
+            'name':'egon',
+            'hobbies':['play','sleep'],
+            'company_info':{
+                'name':'Oldboy',
+                'type':'education',
+                'emp_num':40,
+            }
+        }
+        #print(info['company_info']['name']) #取公司名
+
+
+        students=[
+            {'name':'alex','age':38,'hobbies':['play','sleep']},
+            {'name':'egon','age':18,'hobbies':['read','sleep']},
+            {'name':'wupeiqi','age':58,'hobbies':['music','read','sleep']},
+        ]
+        #print(students[1]['hobbies'][1]) #取第二个学生的第二个爱好
+
+    5) 布尔类型：bool: True False
+       用途：判断
+
+        age_of_oldboy=18
+        #print(age>18)
+
+        #inp_age=input('your age: ')
+        #inp_age=int(inp_age)
+
+        #if inp_age > age_of_oldboy:
+        #    print('猜大了')
+        #elif inp_age < age_of_oldboy:
+        #    print('猜小了')
+        #else:
+        #    print('猜对了')
+
+        # 布尔值的重点知识，所有数据类型自带布尔值
+        # 1 只有三种类型的值为False: 0, None, 空
+        # 2 其余全为True
+
+        #if ['',]:
+        #    print('===>')
+
+
+    6) 可变类型与不可变类型
+       可变：在id不变的情况，值可以改变，则称为可变类型，如列表、字典
+       不可变类型：值一旦改变，id也改变，则称为不可变类型（id变，意味着创建了新的内存空间），如数字、字符串
+
+        x=[1,2,3]
+        #print(id(x), type(x), x)
+        x[2]=6
+        #print(id(x), type(x), x)
+
+        dic={'x':'1', 'y':'2'}
+        #print(id(dic), type(dic), dic)
+        dic['x']=6
+        #print(id(dic), type(dic), dic)
+
+        line='-'*10
+        #name=input('名字： ')
+        #age=input('年龄： ')
+        #sex=input('性别： ')
+        #job=input('工作： ')
+        msg='''
+        %s info of %s %s
+        Name: %s
+        Age: %s
+        Sex: %s
+        Job: %s
+        %s end %s
+        '''
+        #print('My name is %s, age is %s' % ('John', 18))
+        #print(msg % (line, name, line, name, age, sex, job, line, line))
+
+        #print(10/3)
+        #print(10//3)
+        #print(10%3)
+        #print(3**3)
+
+        # 增量赋值
+        age=18
+        #age=age+1
+        age+=2    #age=age+2
+        age-=10
+        #print(age)
+
+
+    7）基本逻辑运算
+       and：逻辑与，用于连接左右两个条件都为True的情况下，and运算的最终结果才是 True
+
+        #print(1>2 and 3>4)
+        #print(2>3 and 3>4)
+        #print(True and True and True and False)
+        #print(True or False and False)
+
+11 流程控制：if..else  while  break continue for 
+    sex='female'
+    age=20
+    is_beutiful=True
+    is_successful=True
+
+    #if sex == 'female' and age>18 and age<26 and is_beutiful:
+    #    print('表白...')
+    #    if is_successful:
+    #        print('在一起')
+    #    else:
+    #        print('表白失败')
+    #else:
+    #    print('阿姨好')
+
+    username='egon'
+    password='123'
+    name=input('name>>: ')
+    pwd=input('password>>: ')
+
+    tag=True
+    while tag:
+        if name == username and pwd == password:
+            print('login successful!')
+            while tag:
+                cmd=input('cmd>>: ')
+                if cmd == 'quit':
+                    tag=False
+                    continue
+                print('%s 命令在执行...' % cmd)
+        else:
+            print('name or password not valid')
+
+    '''
+    如果成绩>=90，那么：优秀
+    如果成绩>=80,那么：良好
+    如果成绩>=70,那么：普通
+    否则,那么：很差
+    '''
+
+    # score=input('score>>: ')
+    # score=int(score)
+    # if score >= 90:
+    #     print('优秀')
+    # elif score >= 80 and score < 90:
+    #     print('良好')
+    # elif score >= 70 and score < 80:
+    #     print('普通')
+    # elif score < 70:
+    #     print('很差')
+
+    # while：条件循环
+    # import time
+    # count=1
+    # while count <= 3:
+    #     print('====>', count)
+    #     count+=1
+    #     time.sleep(0.1)
+
+    # break: 跳出本层循环
+    # age_of_oldboy=18
+    # count=1
+    # while 1:
+    #     if count > 3:
+    #         print('try too many times')
+    #         break
+    #     inp_age=input('your age: ')
+    #     inp_age=int(inp_age)
+    #     if inp_age > age_of_oldboy:
+    #         print('猜大了')
+    #     elif inp_age < age_of_oldboy:
+    #         print('猜小了')
+    #     else:
+    #         print('猜对了')
+    #         break
+    #     print('猜的次数： ', count)
+    #     count+=1
+
+
+    # continue：跳过本次循环，进入下次循环
+    # count=1
+    # while count<5:
+    #     if count == 3:
+    #         count+=1
+    #         continue
+    #     print(count)
+    #     count+=1
+
+    # while True:
+    #     print('====>')
+    #     continue
+    #     print('====>')
+    #     print('====>')
+    #     print('====>')
+
+    for i in range(10):
+        print(i)
+
+    for i in range(1, 10, 2):
+        print(i)
+
+    for i in range(10, 1, -2):
+        print(i)
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,230 @@
+python 3-19 笔记
+
+回顾：
+1. 应用程序、操作系统、计算机硬件 （操作系统不能直接控制硬件，只能通过 CPU 控制硬件）
+2. CPU 内存 硬盘
+3. 编程与编程语言
+4. 编程语言分类：
+    a. 机器语言
+    b. 汇编语言
+    c. 高级语言
+        编译型
+        解释型（开发效率高，跨平台性强）
+5. 安装 python 解释器
+6. python 程序运行方式：
+    a. 交互式：用来调试代码
+    b. python 程序路径
+    第一阶段：启动 python 解释器
+    第二阶段：将 python 程序的代码读入内存
+    第三阶段：python 解释器解释执行内存中读入的 python 代码（首先检测 python 语法是否正确）
+7. 变量
+    a. 定义变量：
+        name = 'egon'
+    b. 变量名的声明方式：
+        sex_of_egon = 'male'
+    c. 变量名的遵循规范：
+        1) 只能是字母、数字、下划线的任意组合
+        2）不能以数字开头
+        3）关键字不能用作变量名
+    d. 常量：
+        AGE_OF_OLDBOY = 73
+    e. 垃圾回收机制：
+        内存中变量的值引用计数为 0 的时候，就会被回收。
+    f. del 变量名  --> 删除的是变量和值的绑定关系
+    g. 变量的三个特征：
+        id
+        type
+        value
+8. 数据类型
+    整型 int
+    浮点型 float
+    字符串
+    列表
+    字典
+9. input
+    a. 在 python3 中
+        name = input('name>>: ')
+        input()     会把用户输入的值全部存储为字符串类型
+    b. 在 python2 中
+        input()     用户输入什么类型的值，程序就把值存成什么类型
+        raw_input() 等于 python3 的 input()
+10. 文件头
+#!/usr/bin/env python3
+# -*- coding:utf-8 -*-
+
+11. 运算符
+    a. 数学运算符
+        /    # 除法，保留小数
+        //   # 除法，取整
+        %    # 除法，取余
+    b. 逻辑运算符
+        and or not
+        True or False and True or False and True
+        False or False and True or False and True
+        False and True and True or False and True
+    c. 比较运算符
+        !=
+    d. 赋值运算符
+        =
+        +=
+        -=
+        %=
+        count += 1
+    e. 身份运算符
+        is  比较的是变量的id
+        ==  比较的是变量的值
+12. 流程控制
+    a. if..else 语句
+        if 条件：
+            代码块1
+        elif 条件：
+            代码块2
+        elif 条件：
+            代码块2
+        else:
+            pass
+        print('====>')
+    b. while 语句和 while..else 语句
+        while 条件:
+            代码块
+
+        while 条件:
+            代码块1
+        else:
+            代码块2
+    c. break 和 continue 语句
+        break    跳出本层循环
+        continue 跳出本次循环，进入下一次循环
+
+新笔记
+1. 变量的赋值方式
+    a. 链式赋值
+        a = b = c = 1
+    b. 交叉赋值
+        a, b = b, a
+        实际执行步骤：
+            tmp = a
+            a = b
+            b = tmp
+    c. 解压赋值
+        numbers = [1, 2, 3, 4, 5]
+        第一种语法：
+        a = numbers[0]
+        b = numbers[1]
+        c = numbers[2]
+        d = numbers[3]
+        e = numbers[4]
+        print(a, b, c, d, e)
+        第二种语法：
+        a, b, c, d, e = numbers
+        print(a, b, c, d, e)
+        第三种语法：
+        a, *_, e = numbers
+        print(a, e)
+2. input
+    a. 在 python3 中
+        name = input('name>>: ')
+        input()     会把用户输入的值全部存储为字符串类型
+    b. 在 python2 中
+        input()     用户输入什么类型的值，程序就把值存成什么类型
+        raw_input() 等于 python3 的 input()
+3. while..else 语句
+    例子：
+        # count = 1
+        # while count < 6:
+        #     # if count == 4:
+        #         # break
+        #     print(count)
+        #     count += 1
+        #     # break
+        # else:
+        #     print('Loop 已经完整运行完， 中间没有被 break 中断的情况下，else 部分的代码才有作用')
+4. 数据类型的使用
+    a. int 整型
+        用途：年龄、等级、各种号码
+        定义：age = 10    # age = int(10)
+        总结：
+            只能存一个值；
+            不存在是否有序；
+            不可变数据类型；
+            可 hash；
+        操作和内置方法：
+            数字运算
+                print(bin(2))    # 转二进制   0b10
+                print(oct(8))    # 转八进制   0o10
+                print(10)        # 十进制     10
+                print(hex(16))   # 转16进制   0x10
+
+    b. float 浮点型
+        用途：身高、体重、工资
+        定义：height = 1.81    # height = float(1.81)
+        总结：
+            只能存一个值；
+            不存在是否有序；
+            不可变数据类型；
+            可 hash；
+        操作和内置方法：
+            数字运算
+    c. str 字符串类型
+        用途：描述性的学籍、地址、姓名
+        定义：name = 'egon'    # name = str('egon')
+        总结：
+            字符串总结：
+            字符串只能存一个值；
+            有序；              # 可以按照索引取值，就是有序的
+            不可变数据类型；
+            可 hash；
+        操作和内置方法：
+            数据类型转换
+                x = str('egon')
+                x = str(10)
+                x = str(10.6)
+                x = str([1, 2, 3])
+                x = str({'name': 'egon', 'age': 18})
+            字符串按索引取值（只能取不能改）
+                s = 'egon'
+                x = s[0]
+                x = s[-1]
+            字符串切片（取首不取尾）
+                s = 'egon'
+                正向切片
+                x = s[0:3]
+                x = s[0:3:1]
+                反向切片
+                x = s[-1:-3:-1]
+            字符串长度 len()
+                x = 'egon'
+                l = len(x)
+            成员运算 in 和 not in
+                name = 'egon'
+                print('e' in name)
+            移除空白 strip()
+                name = ' egon '
+                print(name.strip())
+                name = '***egon***'
+                print(name.strip('*'))
+            拆分字符串 split()
+                info = 'egon:123:admin'
+                info = info.split(':')
+                print(info)
+            字符串循环取值
+                msg = 'alex is alex'
+                i = 0
+                while i < len(msg):
+                    print(msg[i])
+                    i += 1
+                for m in msg:
+                    print(m)
+    d. float 浮点型
+        用途：年龄、等级、各种号码
+        定义：age = 10    # age = int(10)
+        操作和内置方法：
+    e. float 浮点型
+        用途：年龄、等级、各种号码
+        定义：age = 10    # age = int(10)
+        操作和内置方法：
+
+
+
+
+

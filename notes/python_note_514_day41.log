@@ -1,0 +1,92 @@
+python 5-14 笔记
+
+一、视图
+1. 什么是视图
+    视图是通过查询得到的一张虚拟表，然后保存下来，下次要用直接使用即可；
+2. 为什么要使用视图
+    如果要频繁使用一张虚拟表，可以不用重复查询；
+3. 如何使用视图
+    
+    强调：
+        1）在硬盘中，视图只有表结构，没有表数据文件；
+        2）视图通常是用于查询，尽量不要修改视图中的数据；
+    创建视图：
+        create view teacher2course as
+            select * from teacher inner join course
+                on teacher.tid = course.teacher_id;
+    删除视图：
+        drop view teacher2course;
+
+二、触发器
+1. 什么事触发器
+    在满足对某张表数据的增、删、改的情况下，自动触发的功能称之为触发器
+2. 为何要用触发器？
+    触发器专门针对我们对某一张表数据的增insert、删delete、改update的行为，
+    这类行为一旦执行就会触发触发器的执行，即自动运行另外一段sql代码；
+3. 创建触发器语法
+    触发条件 insert/delete/update，触发时间after/before
+
+    create trigger tri_after_insert_t1 after insert on t1 for each row
+    begin
+        sql ..
+    end
+
+    delimiter $$
+    create trigger tri_before_insert_cmd before insert on cmd for each row
+    begin
+        if NEW.success = 'no' then
+            insert into errlog(err_cmd, err_time) VALUES(NEW.cmd, NEW.sub_time);
+        end if;
+    end $$
+    delimiter ;
+
+三、事务
+1. 什么是事务
+    开启一个事务，可以包含一些sql语句，这些sql语句要么同时成功，要么一个都别想成功，称之为事务的原子性；
+2. 事务的作用
+    一旦有某一个出现错误，即可回滚到原来的状态，从而保证数据库数据完整性;
+3. 如何用事务
+    start transaction;
+    update user set balance=900 where name='wsb';
+    update user set balance=1010 where name='egon';
+    update user set balance=1090 where name='ysb';
+    rollback;
+    commit;
+
+    try:
+        start transaction;
+        update user set balance=900 where name='wsb';
+        update user set balance=1010 where name='egon';
+        update user set balance=1090 where name='ysb';
+    except Exception:
+        rollback;
+    finally:
+        commit;
+四、存储过程
+1. 存储过程
+    存储过程包含了一系列可执行的sql语句，存储过程存放于MySQL中，通过调用它的名字，
+    可以执行其内部的一堆sql；
+
+
+三种开发模型：
+1. 应用程序: 只需要开发应用程序逻辑；
+    mysql：编写好存储过程，以供应用程序调用；
+
+    优点：开发效率，执行效率都高；
+    缺点：考虑到人为因素，跨部门沟通等问题，会导致扩展性差；
+2. 应用程序：除了开发应用程序的逻辑，还需要编写原生sql；
+    mysql:
+
+    优点：比方式1，扩展性高（非技术性的）
+    缺点：
+        1. 开发效率，执行效率都不如方式1；
+        2. 编写原生sql太过复杂，而且需要考虑到sql语句的优化问题
+
+3. 应用程序：开发应用程序的逻辑，不需要编写原生sql，基于别人编写好的框架来处理数据，ORM；
+    mysql:
+
+    优点：
+    缺点：
+
+
+

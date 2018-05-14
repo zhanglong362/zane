@@ -1,0 +1,103 @@
+python 4-8 笔记
+
+回顾
+1. 软件开发规范；
+2. json模块，pickle模块；
+3. logging模块；
+4. 模块的使用：
+    import 模块；
+        1）先创建模块的全局名称空间；
+        2）执行模块所对应的文件，将产生的名字和绑定关系存入名称空间；
+        3）在执行文件中import模块名，得到该模块名指向的全局名称空间；
+    from 模块 import 功能或模块；
+        1）先创建模块的名称空间；
+        2）执行模块所对应的文件，将产生的名字和绑定关系存入名称空间；
+        3）在当前名称空间中，直接拿到模块中的名字，可以直接使用，不用加任何前缀；
+
+新笔记
+1. 包
+    1）包是一个包含有 __init__.py 文件的文件夹；
+    2）包是一种特殊形式的模块。即包是用来导入的； 
+2. 包的使用
+    1）import 包名（执行包文件夹下的 __init__.py 文件）；
+    2）包.名字；名字来自于 __init__.py 文件；
+3. 导入包
+    1）产生一个包的名称空间；
+    2）执行包下的__init__.py文件，将产生的名字存放于名称空间中；
+    3）在当前执行文件中拿到一个名字(import 名字)，该名字指向包的名称空间；
+
+4. time模块
+    当前时间的unix时间戳
+    time.time()
+    睡眠时间
+    time.sleep()
+    格式化成时间字符串
+    time.strftime()
+    CST时间
+    time.localtime()
+    UTC时间
+    time.gmtime()
+    时间转换：
+        strftime():   时间类型  --> 时间字符串
+        strptime():   时间字符串 --> 时间类型
+
+        mktime():     时间类型  --> unix时间戳
+        localtime():  unixtime --> 时间类型(CST)
+        gmtime():     unixtime --> 时间类型(CST)
+
+        asctime():    时间类型  --> %a %b %d %H %M %S %Y 字符串类型
+        ctime():      unixtime -->%a %b %d %H %M %S %Y 字符串类型
+
+        时间字符串（现在）
+        datetime.datetime.now()
+
+        unixtime --> 时间字符串
+        datetime.date.fromtimestamp(time.time())
+
+        某个时间间隔之后的时间时间类型
+        datetime.datetime.now() + datetime.timedelta()
+
+        时间的替换
+        c_time  = datetime.datetime.now()
+        c_time.replace(minute=3,hour=2)
+
+        timedelta()方法
+        datetime.timedelta(days=0, seconds=0, microseconds=0, milliseconds=0, minutes=0, hours=0, weeks=0)
+
+5. random 模块
+    (0, 1) 大于0且小于1之间的浮点数（float）
+    random.random()
+
+    [1, 3] 大于等于1且小于等于3之间的整数（int）
+    random.randint(1, 3)
+
+    [1, 3) 大于等于1且小于3之间的整数
+    random.randrange(1, 3)
+
+    1 或 23 或 [4,5]
+    random.choice([1, '23', [4,5]])
+
+    列表元素任意2个组合
+    random.sample([1,'23',[4,5]], 2)
+
+    大于1小于3的小数，如1.927
+    random.uniform(1, 3)
+
+    打乱item的顺序，相当于"洗牌"
+    item = [1, 3, 5, 7, 9]
+    random.shuffle(item)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
